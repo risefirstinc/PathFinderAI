@@ -1,20 +1,20 @@
 from pydantic_settings import BaseSettings
-import os
+from typing import Optional
 
 class Settings(BaseSettings):
     """Application settings from environment variables"""
     
     # Database Configuration
-    db_host: str = os.getenv("DB_HOST", "localhost")
-    db_port: int = int(os.getenv("DB_PORT", 3306))
-    db_user: str = os.getenv("DB_USER", "root")
-    db_password: str = os.getenv("DB_PASSWORD", "")
-    db_name: str = os.getenv("DB_NAME", "pathfinder_db")
+    db_host: str = "localhost"
+    db_port: int = 3306
+    db_user: str = "root"
+    db_password: str = ""
+    db_name: str = "pathfinder_db"
     
     # API Configuration
-    api_host: str = os.getenv("API_HOST", "0.0.0.0")
-    api_port: int = int(os.getenv("API_PORT", 8000))
-    debug: bool = os.getenv("DEBUG", "False").lower() == "true"
+    api_host: str = "0.0.0.0"
+    api_port: int = 8000
+    debug: bool = False
     
     @property
     def database_url(self) -> str:
@@ -23,5 +23,6 @@ class Settings(BaseSettings):
     
     class Config:
         env_file = ".env"
+        case_sensitive = False
 
 settings = Settings()

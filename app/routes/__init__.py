@@ -1,3 +1,3 @@
-from app.routes.users import router as users_router
+from app.routes.careers import router as careers_router
 
-__all__ = ["users_router"]
+__all__ = ["careers_router"]

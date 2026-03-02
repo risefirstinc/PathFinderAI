@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.database import test_connection
-from app.routes import users_router
+from app.routes.careers import router as careers_router
 import logging
 
 # Configure logging
@@ -17,7 +17,7 @@ app = FastAPI(
 )
 
 # Include routers
-app.include_router(users_router)
+app.include_router(careers_router)
 
 @app.on_event("startup")
 async def startup_event():
