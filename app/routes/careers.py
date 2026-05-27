@@ -9,7 +9,7 @@ router = APIRouter(prefix="/careers", tags=["careers"])
 # ==================== RoadMap Endpoints ====================
 
 @router.get("/roadmaps", response_model=list[RoadMapSchema])
-def get_roadmaps(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+def get_roadmaps(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     """Get all roadmaps with pagination"""
     roadmaps = RoadMapService.get_all(db, skip=skip, limit=limit)
     return roadmaps
@@ -22,6 +22,14 @@ def get_roadmap_by_id(roadmap_id: int, db: Session = Depends(get_db)):
     if not roadmap:
         raise HTTPException(status_code=404, detail="RoadMap not found")
     return roadmap
+
+
+@router.get("/roadmaps/career_name/{career_name}", response_model=list[RoadMapSchema])
+def get_roadmap_by_career_name(career_name: str, db: Session = Depends(get_db)):
+    roadmaps = RoadMapService.get_by_career_name(db, career_name)
+    if not roadmaps:
+        raise HTTPException(status_code=404, detail="RoadMap not found")
+    return roadmaps
 
 
 @router.post("/roadmaps", response_model=RoadMapSchema, status_code=status.HTTP_201_CREATED)

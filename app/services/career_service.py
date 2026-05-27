@@ -208,6 +208,19 @@ class RoadMapService:
             logger.error(f"Error fetching roadmap: {str(e)}")
             raise
 
+    @staticmethod
+    def get_by_career_name(db: Session, career_name: str) -> list[RoadMap]:
+        try:
+            return (
+                db.query(RoadMap)
+                .filter(RoadMap.career_name == career_name)
+                .order_by(RoadMap.priority)
+                .all()
+            )
+        except SQLAlchemyError as e:
+            logger.error(f"Error fetching roadmap: {str(e)}")
+            raise
+
 class OverviewService:
     @staticmethod
     def get_all(db: Session, skip: int = 0, limit: int = 10) -> list[Overview]:
