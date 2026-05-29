@@ -3,7 +3,7 @@ from app.database.base import Base
 
 
 class Overview(Base):
-    __tablename__ = "overviews"
+    __tablename__ = "overview"
     
     id = Column(Integer, primary_key=True, index=True)
     career_name = Column(String(255), nullable=False)

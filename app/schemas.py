@@ -23,8 +23,12 @@ class Overview(BaseModel):
     education_cost: str
     alternate_career_names: Optional[str] = None
 
+    model_config = ConfigDict(from_attributes=True)
+
 class Location(BaseModel):
     """Base location schema"""
     id: int
     career_name: str
     location: str
+
+    model_config = ConfigDict(from_attributes=True)
