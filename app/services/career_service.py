@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy import func
 from app.models.roadmap import RoadMap
 from app.models.overview import Overview
 from app.models.location import Location
@@ -208,6 +209,19 @@ class RoadMapService:
             logger.error(f"Error fetching roadmap: {str(e)}")
             raise
 
+    @staticmethod
+    def get_by_career_name(db: Session, career_name: str) -> list[RoadMap]:
+        try:
+            return (
+                db.query(RoadMap)
+                .filter(RoadMap.career_name == career_name)
+                .order_by(RoadMap.id)
+                .all()
+            )
+        except SQLAlchemyError as e:
+            logger.error(f"Error fetching roadmap: {str(e)}")
+            raise
+
 class OverviewService:
     @staticmethod
     def get_all(db: Session, skip: int = 0, limit: int = 10) -> list[Overview]:
@@ -225,6 +239,16 @@ class OverviewService:
             logger.error(f"Error fetching overview: {str(e)}")
             raise
 
+    @staticmethod
+    def get_by_career_name(db: Session, career_name: str) -> Overview:
+        try:
+            return (
+                db.query(Overview).filter(Overview.career_name == career_name).first()
+            )
+        except SQLAlchemyError as e:
+            logger.error(f"Error fetching overview: {str(e)}")
+            raise
+
 class LocationService:
     @staticmethod
     def get_all(db: Session, skip: int = 0, limit: int = 10) -> list[Location]:
@@ -238,6 +262,14 @@ class LocationService:
     def get_by_id(db: Session, location_id: int) -> Location:
         try:
             return db.query(Location).filter(Location.id == location_id).first()
+        except SQLAlchemyError as e:
+            logger.error(f"Error fetching location: {str(e)}")
+            raise
+
+    @staticmethod
+    def get_by_career_name(db: Session, career_name: str) -> Location:
+        try:
+            return db.query(Location).filter(Location.career_name == career_name).all()
         except SQLAlchemyError as e:
             logger.error(f"Error fetching location: {str(e)}")
             raise

@@ -9,7 +9,7 @@ router = APIRouter(prefix="/careers", tags=["careers"])
 # ==================== RoadMap Endpoints ====================
 
 @router.get("/roadmaps", response_model=list[RoadMapSchema])
-def get_roadmaps(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+def get_roadmaps(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     """Get all roadmaps with pagination"""
     roadmaps = RoadMapService.get_all(db, skip=skip, limit=limit)
     return roadmaps
@@ -22,6 +22,14 @@ def get_roadmap_by_id(roadmap_id: int, db: Session = Depends(get_db)):
     if not roadmap:
         raise HTTPException(status_code=404, detail="RoadMap not found")
     return roadmap
+
+
+@router.get("/roadmaps/career_name/{career_name}", response_model=list[RoadMapSchema])
+def get_roadmap_by_career_name(career_name: str, db: Session = Depends(get_db)):
+    roadmaps = RoadMapService.get_by_career_name(db, career_name)
+    if not roadmaps:
+        raise HTTPException(status_code=404, detail="RoadMap not found")
+    return roadmaps
 
 
 @router.post("/roadmaps", response_model=RoadMapSchema, status_code=status.HTTP_201_CREATED)
@@ -63,6 +71,15 @@ def get_overview_by_id(overview_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Overview not found")
     return overview
 
+@router.get("/overviews/career_name/{career_name}", response_model=OverviewSchema)
+def get_overview_by_career_name(career_name: str, db: Session = Depends(get_db)):
+    print(f"Looking for: '{career_name}'")  # ← add this
+    overview = OverviewService.get_by_career_name(db, career_name)
+    print(f"Found: {overview}")  
+    if not overview:
+        raise HTTPException(status_code=404, detail="Overview not found")
+    return overview
+
 
 @router.post("/overviews", response_model=OverviewSchema, status_code=status.HTTP_201_CREATED)
 def create_overview(overview: OverviewSchema, db: Session = Depends(get_db)):
@@ -99,6 +116,14 @@ def get_locations(skip: int = 0, limit: int = 10, db: Session = Depends(get_db))
 def get_location_by_id(location_id: int, db: Session = Depends(get_db)):
     """Get a specific location by ID"""
     location = LocationService.get_by_id(db, location_id)
+    if not location:
+        raise HTTPException(status_code=404, detail="Location not found")
+    return location
+
+
+@router.get("/locations/career_name/{career_name}", response_model=list[LocationSchema])
+def get_roadmap_by_career_name(career_name: str, db: Session = Depends(get_db)):
+    location = LocationService.get_by_career_name(db, career_name)
     if not location:
         raise HTTPException(status_code=404, detail="Location not found")
     return location

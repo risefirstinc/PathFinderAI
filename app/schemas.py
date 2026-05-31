@@ -1,6 +1,7 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from typing import Optional
+from pydantic import BaseModel, ConfigDict
 
 class RoadMap(BaseModel):
     """Base roadmap schema"""
@@ -9,6 +10,8 @@ class RoadMap(BaseModel):
     milestone: str
     milestone_description: str
     priority: int
+
+    model_config = ConfigDict(from_attributes=True)
 
 class Overview(BaseModel):
     """Base overview schema"""
@@ -20,8 +23,12 @@ class Overview(BaseModel):
     education_cost: str
     alternate_career_names: Optional[str] = None
 
+    model_config = ConfigDict(from_attributes=True)
+
 class Location(BaseModel):
     """Base location schema"""
     id: int
     career_name: str
     location: str
+
+    model_config = ConfigDict(from_attributes=True)
