@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 class RoadMapService:
     @staticmethod
-    def get_all(db: Session, skip: int = 0, limit: int = 10) -> list:
+    def get_all(db: Session, skip: int = 0, limit: int = None) -> list:
         try:
             return db.query(RoadMap).offset(skip).limit(limit).all()
         except SQLAlchemyError as e:
@@ -73,7 +73,7 @@ class RoadMapService:
 
 class OverviewService:
     @staticmethod
-    def get_all(db: Session, skip: int = 0, limit: int = 10) -> list:
+    def get_all(db: Session, skip: int = 0, limit: int = None) -> list:
         try:
             return db.query(Overview).offset(skip).limit(limit).all()
         except SQLAlchemyError as e:
@@ -134,7 +134,7 @@ class OverviewService:
 
 class LocationService:
     @staticmethod
-    def get_all(db: Session, skip: int = 0, limit: int = 10) -> list:
+    def get_all(db: Session, skip: int = 0, limit: int = None) -> list:
         try:
             return db.query(Location).offset(skip).limit(limit).all()
         except SQLAlchemyError as e:
@@ -194,7 +194,7 @@ class LocationService:
 
 class RoadMapService:
     @staticmethod
-    def get_all(db: Session, skip: int = 0, limit: int = 10) -> list[RoadMap]:
+    def get_all(db: Session, skip: int = 0, limit: int = None) -> list[RoadMap]:
         try:
             return db.query(RoadMap).offset(skip).limit(limit).all()
         except SQLAlchemyError as e:
@@ -224,7 +224,7 @@ class RoadMapService:
 
 class OverviewService:
     @staticmethod
-    def get_all(db: Session, skip: int = 0, limit: int = 10) -> list[Overview]:
+    def get_all(db: Session, skip: int = 0, limit: int = None) -> list[Overview]:
         try:
             return db.query(Overview).offset(skip).limit(limit).all()
         except SQLAlchemyError as e:
@@ -251,7 +251,7 @@ class OverviewService:
 
 class LocationService:
     @staticmethod
-    def get_all(db: Session, skip: int = 0, limit: int = 10) -> list[Location]:
+    def get_all(db: Session, skip: int = 0, limit: int = None) -> list[Location]:
         try:
             return db.query(Location).offset(skip).limit(limit).all()
         except SQLAlchemyError as e:

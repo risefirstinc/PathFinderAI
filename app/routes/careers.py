@@ -9,7 +9,7 @@ router = APIRouter(prefix="/careers", tags=["careers"])
 # ==================== RoadMap Endpoints ====================
 
 @router.get("/roadmaps", response_model=list[RoadMapSchema])
-def get_roadmaps(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def get_roadmaps(skip: int = 0, limit: int = None, db: Session = Depends(get_db)):
     """Get all roadmaps with pagination"""
     roadmaps = RoadMapService.get_all(db, skip=skip, limit=limit)
     return roadmaps
@@ -57,7 +57,7 @@ def delete_roadmap(roadmap_id: int, db: Session = Depends(get_db)):
 # ==================== Overview Endpoints ====================
 
 @router.get("/overviews", response_model=list[OverviewSchema])
-def get_overviews(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+def get_overviews(skip: int = 0, limit: int = None, db: Session = Depends(get_db)):
     """Get all overviews with pagination"""
     overviews = OverviewService.get_all(db, skip=skip, limit=limit)
     return overviews
@@ -106,7 +106,7 @@ def delete_overview(overview_id: int, db: Session = Depends(get_db)):
 # ==================== Location Endpoints ====================
 
 @router.get("/locations", response_model=list[LocationSchema])
-def get_locations(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+def get_locations(skip: int = 0, limit: int = None, db: Session = Depends(get_db)):
     """Get all locations with pagination"""
     locations = LocationService.get_all(db, skip=skip, limit=limit)
     return locations

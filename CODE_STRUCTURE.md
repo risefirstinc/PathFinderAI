@@ -59,7 +59,7 @@ class Location(Base):
 ```python
 class RoadMapService:
     @staticmethod
-    def get_all(db: Session, skip: int = 0, limit: int = 10) -> list:
+    def get_all(db: Session, skip: int = 0, limit: int = None) -> list:
         try:
             return db.query(RoadMap).offset(skip).limit(limit).all()
         except SQLAlchemyError as e:
@@ -127,7 +127,7 @@ class RoadMapService:
 ### RoadMap Endpoints
 ```python
 @router.get("/roadmaps", response_model=list[RoadMapSchema])
-def get_roadmaps(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+def get_roadmaps(skip: int = 0, limit: int = None, db: Session = Depends(get_db)):
     """Get all roadmaps with pagination"""
     roadmaps = RoadMapService.get_all(db, skip=skip, limit=limit)
     return roadmaps
