@@ -5,11 +5,11 @@ class Settings(BaseSettings):
     """Application settings from environment variables"""
     
     # Database Configuration
-    db_host: str = "localhost"
+    db_host: str = "career-database.ckffsif8jnhi.us-east-2.rds.amazonaws.com"
     db_port: int = 3306
-    db_user: str = "root"
-    db_password: str = ""
-    db_name: str = "pathfinder_db"
+    db_user: str = "career_admin"
+    db_password: str = "careerpassword2026"
+    db_name: str = "career_info_db"
     
     # API Configuration
     api_host: str = "0.0.0.0"
